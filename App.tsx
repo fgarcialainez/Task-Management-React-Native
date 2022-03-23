@@ -12,7 +12,7 @@ import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {TaskScreen, TaskScreenType} from './src/screens/TaskScreen';
+import {TaskListScreen, TaskListScreenType} from './src/screens/TaskListScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Create the bottom tab navigator
@@ -24,7 +24,7 @@ const App = () => {
       <Tab.Navigator>
         <Tab.Screen
           name="All"
-          children={() => <TaskScreen type={TaskScreenType.ALL} />}
+          children={() => <TaskListScreen type={TaskListScreenType.ALL} />}
           options={{
             tabBarLabel: 'All Tasks',
             tabBarIcon: ({color, size}) => (
@@ -39,7 +39,7 @@ const App = () => {
         />
         <Tab.Screen
           name="TODO"
-          children={() => <TaskScreen type={TaskScreenType.TODO} />}
+          children={() => <TaskListScreen type={TaskListScreenType.TODO} />}
           options={{
             tabBarLabel: 'TODO',
             tabBarIcon: ({color, size}) => (
@@ -53,7 +53,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Done"
-          children={() => <TaskScreen type={TaskScreenType.DONE} />}
+          children={() => <TaskListScreen type={TaskListScreenType.DONE} />}
           options={{
             tabBarLabel: 'Done',
             tabBarIcon: ({color, size}) => (
