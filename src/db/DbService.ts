@@ -16,12 +16,12 @@ export const getDBConnection = async () => {
 export const createTable = async (db: SQLiteDatabase) => {
   // create table if not exists
   const query = `CREATE TABLE IF NOT EXISTS ${tableName}(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        completed BOOLEAN NOT NULL CHECK (completed IN (0, 1))
-    );`;
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          description TEXT NOT NULL,
+          createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          completed BOOLEAN NOT NULL CHECK (completed IN (0, 1))
+      );`;
 
   await db.executeSql(query);
 };
@@ -49,11 +49,13 @@ export const saveTodoItems = async (
   todoItems: ToDoItem[],
 ) => {
   const insertQuery =
-    `INSERT OR REPLACE INTO ${tableName}(id, title, description, createDate, completed) values` +
+    `INSERT OR REPLACE INTO ${tableName}(id, title, description, completed) values` +
     todoItems
       .map(
         i =>
-          `(${i.id}, '${i.title}', '${i.description}', '${i.createDate}', '${i.completed}')`,
+          `(${i.id}, '${i.title}', '${i.description}', '${
+            i.completed ? 1 : 0
+          }')`,
       )
       .join(',');
 

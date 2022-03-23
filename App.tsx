@@ -8,17 +8,30 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TaskListScreen, TaskListScreenType} from './src/screens/TaskListScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {loadMockData} from './src/db/MockData';
 
 // Create the bottom tab navigator
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  useEffect(() => {
+    // Load mock data
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    // Load mock data
+    const todoItems = await loadMockData();
+
+    console.log(todoItems);
+  };
+
   return (
     <NavigationContainer>
       <Tab.Navigator>
