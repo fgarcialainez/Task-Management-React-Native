@@ -15,10 +15,11 @@ import {ToDoItem} from '../models';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
   },
-  text: {
+  noDataText: {
+    marginTop: 100,
     justifyContent: 'center',
   },
   itemRow: {
@@ -98,7 +99,7 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
       )}
 
       {todoItems.length === 0 && (
-        <Text style={styles.text}>There are no tasks available</Text>
+        <Text style={styles.noDataText}>There are no tasks available</Text>
       )}
     </View>
   );
