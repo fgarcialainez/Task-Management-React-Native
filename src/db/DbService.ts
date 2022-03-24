@@ -26,12 +26,19 @@ export const createTable = async (db: SQLiteDatabase) => {
   await db.executeSql(query);
 };
 
-export const getTodoItems = async (db: SQLiteDatabase): Promise<ToDoItem[]> => {
+export const getTodoItems = async (
+  db: SQLiteDatabase,
+  completed?: boolean,
+): Promise<ToDoItem[]> => {
   try {
     const todoItems: ToDoItem[] = [];
-    const results = await db.executeSql(
-      `SELECT id,title,description,createDate,completed FROM ${tableName}`,
-    );
+    var sqlQuery = `SELECT id,title,description,createDate,completed FROM ${tableName}`;
+
+    if (completed !== undefined) {
+      sqlQuery += ` WHERE completed = ${completed ? 1 : 0}`;
+    }
+
+    const results = await db.executeSql(sqlQuery);
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         todoItems.push(result.rows.item(index));

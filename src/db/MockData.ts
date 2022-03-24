@@ -4,40 +4,41 @@ import {
   getTodoItems,
   saveTodoItems,
 } from './DbService';
-import {ToDoItem} from '../models';
 
-export const loadMockData = async (): Promise<ToDoItem[]> => {
+export const loadMockData = async () => {
   try {
-    const initTodos = [
-      {
-        id: 0,
-        title: 'Go to shop',
-        description: 'Description 0',
-        completed: false,
-      },
-      {
-        id: 1,
-        title: 'Eat healthy food',
-        description: 'Description 1',
-        completed: false,
-      },
-      {
-        id: 2,
-        title: 'Do some exercise',
-        description: 'Description 2',
-        completed: false,
-      },
-    ];
-
     const db = await getDBConnection();
     await createTable(db);
     const storedTodoItems = await getTodoItems(db);
 
-    if (storedTodoItems.length) {
-      return storedTodoItems;
-    } else {
+    if (!storedTodoItems.length) {
+      const initTodos = [
+        {
+          id: 0,
+          title: 'Go to shop',
+          description: 'Description 0',
+          completed: false,
+        },
+        {
+          id: 1,
+          title: 'Eat healthy food',
+          description: 'Description 1',
+          completed: false,
+        },
+        {
+          id: 2,
+          title: 'Do some exercise',
+          description: 'Description 2',
+          completed: false,
+        },
+        {
+          id: 3,
+          title: 'Daily programming',
+          description: 'Description 3',
+          completed: true,
+        },
+      ];
       await saveTodoItems(db, initTodos);
-      return initTodos;
     }
   } catch (error) {
     console.error(error);

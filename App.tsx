@@ -27,9 +27,7 @@ const App = () => {
 
   const fetchData = async () => {
     // Load mock data
-    const todoItems = await loadMockData();
-
-    console.log(todoItems);
+    await loadMockData();
   };
 
   return (
