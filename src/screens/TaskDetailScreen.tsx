@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ToDoItem} from '../models';
@@ -6,8 +6,7 @@ import {ToDoItem} from '../models';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: 'column',
   },
   titleText: {
     marginTop: 10,
@@ -21,7 +20,10 @@ export interface TaskDetailScreenProps {
   task: ToDoItem;
 }
 
-export const TaskDetailScreen = (props: TaskDetailScreenProps) => {
+//@ts-ignore
+export const TaskDetailScreen = ({route}) => {
+  const {task} = route.params;
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const containerStyle = {
@@ -29,10 +31,14 @@ export const TaskDetailScreen = (props: TaskDetailScreenProps) => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  useEffect(() => {
+    console.log(task);
+  });
+
   return (
     <View style={containerStyle}>
-      <Text style={styles.titleText}>{props.task.title}</Text>
-      <Text style={styles.descriptionText}>{props.task.description}</Text>
+      <Text style={styles.titleText}>{task.title}</Text>
+      <Text style={styles.descriptionText}>{task.description}</Text>
     </View>
   );
 };

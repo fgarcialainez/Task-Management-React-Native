@@ -11,11 +11,13 @@
 import React, {useEffect, useState} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TaskListScreen, TaskListScreenType} from './src/screens/TaskListScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {loadMockData} from './src/db/MockData';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {TaskDetailScreen} from './src/screens/TaskDetailScreen';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,8 +31,11 @@ const styles = StyleSheet.create({
   },
 });
 
-// Create the bottom tab navigator
+// Create the bottom tab and stack navigators
 const Tab = createBottomTabNavigator();
+const AllTasksStack = createStackNavigator();
+const TodoTasksStack = createStackNavigator();
+const DoneTasksStack = createStackNavigator();
 
 const App = () => {
   const [mockDataLoaded, setMockDataLoaded] = useState(false);
@@ -48,6 +53,51 @@ const App = () => {
     setMockDataLoaded(true);
   };
 
+  const AllTasksStackScreen = () => (
+    <AllTasksStack.Navigator>
+      <AllTasksStack.Screen
+        name="TaskListScreen"
+        children={() => <TaskListScreen type={TaskListScreenType.ALL} />}
+        options={{title: 'All Tasks'}}
+      />
+      <AllTasksStack.Screen
+        name="TaskDetailScreen"
+        component={TaskDetailScreen}
+        options={{title: 'Task Details'}}
+      />
+    </AllTasksStack.Navigator>
+  );
+
+  const TodoTasksStackScreen = () => (
+    <TodoTasksStack.Navigator>
+      <TodoTasksStack.Screen
+        name="TaskListScreen"
+        children={() => <TaskListScreen type={TaskListScreenType.TODO} />}
+        options={{title: 'TODO'}}
+      />
+      <TodoTasksStack.Screen
+        name="TaskDetailScreen"
+        component={TaskDetailScreen}
+        options={{title: 'Task Details'}}
+      />
+    </TodoTasksStack.Navigator>
+  );
+
+  const DoneTasksStackScreen = () => (
+    <DoneTasksStack.Navigator>
+      <DoneTasksStack.Screen
+        name="TaskListScreen"
+        children={() => <TaskListScreen type={TaskListScreenType.DONE} />}
+        options={{title: 'Done'}}
+      />
+      <DoneTasksStack.Screen
+        name="TaskDetailScreen"
+        component={TaskDetailScreen}
+        options={{title: 'Task Details'}}
+      />
+    </DoneTasksStack.Navigator>
+  );
+
   const DataLoadingComponent = () => (
     <View style={[styles.container, styles.horizontal]}>
       <ActivityIndicator size="small" />
@@ -59,8 +109,9 @@ const App = () => {
       <Tab.Navigator>
         <Tab.Screen
           name="All Tasks"
-          children={() => <TaskListScreen type={TaskListScreenType.ALL} />}
+          component={AllTasksStackScreen}
           options={{
+            headerShown: false,
             tabBarLabel: 'All Tasks',
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons
@@ -74,8 +125,9 @@ const App = () => {
         />
         <Tab.Screen
           name="TODO"
-          children={() => <TaskListScreen type={TaskListScreenType.TODO} />}
+          component={TodoTasksStackScreen}
           options={{
+            headerShown: false,
             tabBarLabel: 'TODO',
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons
@@ -88,8 +140,9 @@ const App = () => {
         />
         <Tab.Screen
           name="Done"
-          children={() => <TaskListScreen type={TaskListScreenType.DONE} />}
+          component={DoneTasksStackScreen}
           options={{
+            headerShown: false,
             tabBarLabel: 'Done',
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons
