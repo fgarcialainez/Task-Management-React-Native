@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {getDBConnection, getTodoItems} from '../db/DbService';
 import {ToDoItem} from '../models';
@@ -12,6 +20,19 @@ const styles = StyleSheet.create({
   },
   text: {
     justifyContent: 'center',
+  },
+  itemRow: {
+    flex: 1,
+    height: 55,
+    padding: 10,
+    marginLeft: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemText: {
+    padding: 11,
+    fontSize: 18,
+    height: 44,
   },
 });
 
@@ -30,7 +51,7 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
 
   const isDarkMode = useColorScheme() === 'dark';
 
-  const containerStype = {
+  const containerStyle = {
     ...styles.container,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -57,15 +78,27 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
   };
 
   return (
-    <View style={containerStype}>
-      {props.type === TaskListScreenType.ALL && (
-        <Text style={styles.text}>All Tasks ({todoItems.length})</Text>
+    <View style={containerStyle}>
+      {todoItems.length > 0 && (
+        <FlatList
+          data={todoItems}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => console.log(`Clicked ${item.id}`)}>
+              <View style={styles.itemRow}>
+                <MaterialCommunityIcons
+                  name={item.completed ? 'calendar-check' : 'calendar-clock'}
+                  size={34}
+                  color="black"
+                />
+                <Text style={styles.itemText}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
       )}
-      {props.type === TaskListScreenType.TODO && (
-        <Text style={styles.text}>TODO ({todoItems.length})</Text>
-      )}
-      {props.type === TaskListScreenType.DONE && (
-        <Text style={styles.text}>Done ({todoItems.length})</Text>
+
+      {todoItems.length === 0 && (
+        <Text style={styles.text}>There are no tasks available</Text>
       )}
     </View>
   );

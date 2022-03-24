@@ -70,12 +70,12 @@ export const saveTodoItems = async (
 };
 
 export const deleteTodoItem = async (db: SQLiteDatabase, id: number) => {
-  const deleteQuery = `DELETE from ${tableName} where id = ${id}`;
+  const deleteQuery = `DELETE FROM ${tableName} WHERE id = ${id}`;
   await db.executeSql(deleteQuery);
 };
 
 export const deleteTable = async (db: SQLiteDatabase) => {
-  const query = `drop table ${tableName}`;
+  const query = `DROP TABLE IF EXISTS ${tableName}`;
 
   await db.executeSql(query);
 };
