@@ -58,7 +58,7 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
-          name="All"
+          name="All Tasks"
           children={() => <TaskListScreen type={TaskListScreenType.ALL} />}
           options={{
             tabBarLabel: 'All Tasks',

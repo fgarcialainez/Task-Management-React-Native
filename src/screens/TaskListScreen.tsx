@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {getDBConnection, getTodoItems} from '../db/DbService';
 import {ToDoItem} from '../models';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +49,8 @@ export interface TaskListScreenProps {
 }
 
 export const TaskListScreen = (props: TaskListScreenProps) => {
+  const navigation = useNavigation();
+
   const [todoItems, setTodoItems] = useState<ToDoItem[]>([]);
 
   const isDarkMode = useColorScheme() === 'dark';
@@ -84,7 +87,13 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
         <FlatList
           data={todoItems}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => console.log(`Clicked ${item.id}`)}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(
+                  'TaskDetailScreen' as never,
+                  {task: item} as never,
+                )
+              }>
               <View style={styles.itemRow}>
                 <MaterialCommunityIcons
                   name={item.completed ? 'calendar-check' : 'calendar-clock'}
