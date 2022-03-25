@@ -15,7 +15,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TaskListScreen, TaskListScreenType} from './src/screens/TaskListScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {loadMockData} from './src/db/MockData';
+import {loadMockData} from './src/database/MockData';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {TaskDetailScreen} from './src/screens/TaskDetailScreen';
 

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {getDBConnection, getTodoItems} from '../db/DbService';
+import {getDBConnection, getTodoItems} from '../database/DbService';
 import {ToDoItem} from '../models';
 import {useNavigation} from '@react-navigation/native';
 
