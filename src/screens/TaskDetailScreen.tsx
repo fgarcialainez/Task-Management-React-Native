@@ -1,15 +1,13 @@
 import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import {
-  Alert,
-  Button,
-  StyleSheet,
-  useColorScheme,
-  View,
-  Text,
-} from 'react-native';
+import {Button, StyleSheet, useColorScheme, View, Text} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Input} from '../components/Input';
+import {
+  getDBConnection,
+  getMaxTodoId,
+  saveTodoItems,
+} from '../database/DbService';
 import {ToDoItem} from '../models';
 
 const styles = StyleSheet.create({
@@ -52,8 +50,23 @@ export const TaskDetailScreen = ({navigation, route}) => {
     }
   });
 
-  const onSubmit = (data: any) => {
-    Alert.alert('Form Submitted!', JSON.stringify(data), [{text: 'OK'}]);
+  const onSubmit = async (data: any) => {
+    // Alert.alert('Form Submitted!', JSON.stringify(data), [{text: 'OK'}]);
+
+    // Save in the db
+    const db = await getDBConnection();
+
+    // Get the next TODO item id
+    const taskId = task ? task.id : (await getMaxTodoId(db)) + 1;
+
+    // Create the item object
+    const todoItem = {...data, id: taskId, completed: false};
+
+    // Save the items in the db
+    await saveTodoItems(db, [todoItem]);
+
+    // Close the details screen
+    navigation.pop();
   };
 
   return (

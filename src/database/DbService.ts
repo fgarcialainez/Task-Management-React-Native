@@ -16,7 +16,7 @@ export const getDBConnection = async () => {
 export const createTable = async (db: SQLiteDatabase) => {
   // create table if not exists
   const query = `CREATE TABLE IF NOT EXISTS ${tableName}(
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id INTEGER PRIMARY KEY,
           name TEXT NOT NULL,
           description TEXT NOT NULL,
           completed BOOLEAN NOT NULL CHECK (completed IN (0, 1))
@@ -47,6 +47,19 @@ export const getTodoItems = async (
   } catch (error) {
     console.error(error);
     throw Error('Error retrieving TODO items');
+  }
+};
+
+export const getMaxTodoId = async (db: SQLiteDatabase): Promise<number> => {
+  try {
+    var sqlQuery = `SELECT MAX(id) FROM ${tableName}`;
+
+    const results = await db.executeSql(sqlQuery);
+
+    return results[0].insertId;
+  } catch (error) {
+    console.error(error);
+    throw Error('Error retrieving next TODO item id');
   }
 };
 

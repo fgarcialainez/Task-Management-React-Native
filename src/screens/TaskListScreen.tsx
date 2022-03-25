@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {
   FlatList,
   StyleSheet,
@@ -36,6 +37,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
+  headerButtonRight: {
+    paddingRight: 10,
+    paddingTop: 1,
+  },
 });
 
 export enum TaskListScreenType {
@@ -60,10 +65,31 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  useEffect(() => {
-    // Load data
-    loadData();
-  });
+  useFocusEffect(
+    useCallback(() => {
+      //View did appear load data
+      loadData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <MaterialCommunityIcons
+          name={'pencil-plus-outline'}
+          size={22}
+          style={styles.headerButtonRight}
+          onPress={() =>
+            navigation.navigate(
+              'TaskDetailScreen' as never,
+              {task: null} as never,
+            )
+          }
+        />
+      ),
+    });
+  }, [navigation]);
 
   const loadData = async () => {
     const db = await getDBConnection();
