@@ -1,9 +1,17 @@
 import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import {Button, StyleSheet, useColorScheme, View, Text} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  useColorScheme,
+  View,
+  Text,
+  Alert,
+} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Input} from '../components/Input';
 import {
+  deleteTodoItem,
   getDBConnection,
   getMaxTodoId,
   saveTodoItems,
@@ -18,6 +26,9 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     paddingHorizontal: 10,
+    marginTop: 5,
+  },
+  button: {
     marginTop: 5,
   },
 });
@@ -53,7 +64,7 @@ export const TaskDetailScreen = ({navigation, route}) => {
   const onSubmit = async (data: any) => {
     // Alert.alert('Form Submitted!', JSON.stringify(data), [{text: 'OK'}]);
 
-    // Save in the db
+    // Get db connection
     const db = await getDBConnection();
 
     // Get the next TODO item id
@@ -65,8 +76,32 @@ export const TaskDetailScreen = ({navigation, route}) => {
     // Save the items in the db
     await saveTodoItems(db, [todoItem]);
 
-    // Close the details screen
+    // Close the screen
     navigation.pop();
+  };
+
+  const handleDeleteTask = () => {
+    // Show confirmation dialog
+    Alert.alert('Delete Task', 'Are you sure you want to delete this task?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          // Get db connection
+          const db = await getDBConnection();
+
+          // Delete the items from the db
+          await deleteTodoItem(db, task.id);
+
+          // Close the screen
+          navigation.pop();
+        },
+      },
+    ]);
   };
 
   return (
@@ -76,6 +111,13 @@ export const TaskDetailScreen = ({navigation, route}) => {
       <Text style={styles.inputLabel}>Description</Text>
       <Input name="description" control={control} rules={{required: true}} />
       <Button title={submitButtonTitle} onPress={handleSubmit(onSubmit)} />
+      {task && (
+        <Button
+          title={'Delete Task'}
+          color="#FF0000"
+          onPress={handleDeleteTask}
+        />
+      )}
     </View>
   );
 };
