@@ -19,25 +19,25 @@ export const loadMockData = async () => {
     const initTodos = [
       {
         id: 0,
-        title: 'Go to shop',
+        name: 'Go to shop',
         description: 'Description 0',
         completed: false,
       },
       {
         id: 1,
-        title: 'Eat healthy food',
+        name: 'Eat healthy food',
         description: 'Description 1',
         completed: false,
       },
       {
         id: 2,
-        title: 'Do some exercise',
+        name: 'Do some exercise',
         description: 'Description 2',
         completed: false,
       },
       {
         id: 3,
-        title: 'Daily programming',
+        name: 'Daily programming',
         description: 'Description 3',
         completed: true,
       },

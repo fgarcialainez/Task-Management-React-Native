@@ -100,7 +100,7 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
                   size={34}
                   color="black"
                 />
-                <Text style={styles.itemText}>{item.title}</Text>
+                <Text style={styles.itemText}>{item.name}</Text>
               </View>
             </TouchableOpacity>
           )}
