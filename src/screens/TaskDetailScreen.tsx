@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {Input} from '../components/Input';
+import {FormControlType, FormControl} from '../components/FormControl';
 import {
   deleteTodoItem,
   getDBConnection,
@@ -54,6 +54,7 @@ export const TaskDetailScreen = ({navigation, route}) => {
     if (task) {
       setValue('name', task.name);
       setValue('description', task.description);
+      setValue('completed', task.completed ? true : false);
 
       navigation.setOptions({title: 'Task Details'});
     } else {
@@ -71,7 +72,7 @@ export const TaskDetailScreen = ({navigation, route}) => {
     const taskId = task ? task.id : (await getMaxTodoId(db)) + 1;
 
     // Create the item object
-    const todoItem = {...data, id: taskId, completed: false};
+    const todoItem = {...data, id: taskId};
 
     // Save the items in the db
     await saveTodoItems(db, [todoItem]);
@@ -107,9 +108,26 @@ export const TaskDetailScreen = ({navigation, route}) => {
   return (
     <View style={containerStyle}>
       <Text style={styles.inputLabel}>Name</Text>
-      <Input name="name" control={control} rules={{required: true}} />
+      <FormControl
+        type={FormControlType.TextInputControl}
+        name="name"
+        control={control}
+        rules={{required: true}}
+      />
       <Text style={styles.inputLabel}>Description</Text>
-      <Input name="description" control={control} rules={{required: true}} />
+      <FormControl
+        type={FormControlType.TextInputControl}
+        name="description"
+        control={control}
+        rules={{required: true}}
+      />
+      <Text style={styles.inputLabel}>Completed</Text>
+      <FormControl
+        type={FormControlType.SwitchControl}
+        name="completed"
+        control={control}
+        rules={{}}
+      />
       <Button title={submitButtonTitle} onPress={handleSubmit(onSubmit)} />
       {task && (
         <Button
