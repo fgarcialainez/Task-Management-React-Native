@@ -3,8 +3,8 @@ import {TextInput, StyleSheet, Switch} from 'react-native';
 import {useController} from 'react-hook-form';
 
 export enum FormControlType {
-  TextInputControl = 1,
-  SwitchControl,
+  TEXT,
+  SWITCH,
 }
 
 const styles = StyleSheet.create({
@@ -29,7 +29,7 @@ export const FormControl = ({type, name, control, rules, ...rest}) => {
   });
 
   switch (type) {
-    case FormControlType.TextInputControl:
+    case FormControlType.TEXT:
       return (
         <TextInput
           {...rest}
@@ -40,7 +40,7 @@ export const FormControl = ({type, name, control, rules, ...rest}) => {
           placeholder={name}
         />
       );
-    case FormControlType.SwitchControl:
+    case FormControlType.SWITCH:
       return (
         <Switch
           {...rest}

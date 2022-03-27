@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
+  itemSeparator: {
+    backgroundColor: 'gray',
+    height: 0.5,
+  },
   headerButtonRight: {
     paddingRight: 10,
     paddingTop: 1,
@@ -92,19 +96,26 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
   }, [navigation]);
 
   const loadData = async () => {
+    // Create the db connection
     const db = await getDBConnection();
+
+    // Create the list of tasks
+    var items = [];
 
     switch (props.type) {
       case TaskListScreenType.ALL:
-        setTodoItems(await getTodoItems(db));
+        items = await getTodoItems(db);
         break;
       case TaskListScreenType.TODO:
-        setTodoItems(await getTodoItems(db, false));
+        items = await getTodoItems(db, false);
         break;
       case TaskListScreenType.DONE:
-        setTodoItems(await getTodoItems(db, true));
+        items = await getTodoItems(db, true);
         break;
     }
+
+    // Update the state
+    setTodoItems(items);
   };
 
   return (
@@ -112,6 +123,7 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
       {todoItems.length > 0 && (
         <FlatList
           data={todoItems}
+          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>

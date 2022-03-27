@@ -109,21 +109,21 @@ export const TaskDetailScreen = ({navigation, route}) => {
     <View style={containerStyle}>
       <Text style={styles.inputLabel}>Name</Text>
       <FormControl
-        type={FormControlType.TextInputControl}
+        type={FormControlType.TEXT}
         name="name"
         control={control}
         rules={{required: true}}
       />
       <Text style={styles.inputLabel}>Description</Text>
       <FormControl
-        type={FormControlType.TextInputControl}
+        type={FormControlType.TEXT}
         name="description"
         control={control}
         rules={{required: true}}
       />
       <Text style={styles.inputLabel}>Completed</Text>
       <FormControl
-        type={FormControlType.SwitchControl}
+        type={FormControlType.SWITCH}
         name="completed"
         control={control}
         rules={{}}
