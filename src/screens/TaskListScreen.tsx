@@ -79,6 +79,7 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: navigationBarTitle(),
       headerRight: () => (
         <MaterialCommunityIcons
           name={'pencil-plus-outline'}
@@ -93,7 +94,8 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
         />
       ),
     });
-  }, [navigation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation, todoItems]);
 
   const loadData = async () => {
     // Create the db connection
@@ -116,6 +118,17 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
 
     // Update the state
     setTodoItems(items);
+  };
+
+  const navigationBarTitle = (): string => {
+    switch (props.type) {
+      case TaskListScreenType.ALL:
+        return `Àll Tasks (${todoItems.length})`;
+      case TaskListScreenType.TODO:
+        return `TODO (${todoItems.length})`;
+      case TaskListScreenType.DONE:
+        return `DONE (${todoItems.length})`;
+    }
   };
 
   return (
@@ -146,7 +159,9 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
       )}
 
       {todoItems.length === 0 && (
-        <Text style={styles.noDataText}>There are no tasks available</Text>
+        <Text style={styles.noDataText}>
+          There are no tasks to display here
+        </Text>
       )}
     </View>
   );

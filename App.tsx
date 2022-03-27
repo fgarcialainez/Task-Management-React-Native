@@ -63,7 +63,7 @@ const App = () => {
       <AllTasksStack.Screen
         name="TaskDetailScreen"
         component={TaskDetailScreen}
-        options={{title: 'Task Details'}}
+        options={{title: 'Task Details', headerBackTitle: 'Back'}}
       />
     </AllTasksStack.Navigator>
   );
@@ -78,7 +78,7 @@ const App = () => {
       <TodoTasksStack.Screen
         name="TaskDetailScreen"
         component={TaskDetailScreen}
-        options={{title: 'Task Details'}}
+        options={{title: 'Task Details', headerBackTitle: 'Back'}}
       />
     </TodoTasksStack.Navigator>
   );
@@ -93,7 +93,7 @@ const App = () => {
       <DoneTasksStack.Screen
         name="TaskDetailScreen"
         component={TaskDetailScreen}
-        options={{title: 'Task Details'}}
+        options={{title: 'Task Details', headerBackTitle: 'Back'}}
       />
     </DoneTasksStack.Navigator>
   );
@@ -120,7 +120,6 @@ const App = () => {
                 size={size}
               />
             ),
-            tabBarBadge: 2,
           }}
         />
         <Tab.Screen
