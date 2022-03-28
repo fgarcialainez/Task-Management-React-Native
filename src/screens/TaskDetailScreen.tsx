@@ -24,12 +24,17 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingTop: 15,
   },
+  row: {
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
   inputLabel: {
     paddingHorizontal: 10,
     marginTop: 5,
   },
-  button: {
-    marginTop: 5,
+  inputLabelSwitch: {
+    paddingHorizontal: 10,
+    marginTop: 17,
   },
 });
 
@@ -121,13 +126,15 @@ export const TaskDetailScreen = ({navigation, route}) => {
         control={control}
         rules={{required: true}}
       />
-      <Text style={styles.inputLabel}>Completed</Text>
-      <FormControl
-        type={FormControlType.SWITCH}
-        name="completed"
-        control={control}
-        rules={{}}
-      />
+      <View style={styles.row}>
+        <Text style={styles.inputLabelSwitch}>Completed</Text>
+        <FormControl
+          type={FormControlType.SWITCH}
+          name="completed"
+          control={control}
+          rules={{}}
+        />
+      </View>
       <Button title={submitButtonTitle} onPress={handleSubmit(onSubmit)} />
       {task && (
         <Button
