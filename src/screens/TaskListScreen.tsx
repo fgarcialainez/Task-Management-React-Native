@@ -123,7 +123,7 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
   const navigationBarTitle = (): string => {
     switch (props.type) {
       case TaskListScreenType.ALL:
-        return `Àll Tasks (${todoItems.length})`;
+        return `All Tasks (${todoItems.length})`;
       case TaskListScreenType.TODO:
         return `TODO (${todoItems.length})`;
       case TaskListScreenType.DONE:

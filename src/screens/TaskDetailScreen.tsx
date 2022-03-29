@@ -23,18 +23,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     paddingTop: 15,
+    paddingHorizontal: 20,
   },
   row: {
     flexDirection: 'row',
     marginBottom: 15,
   },
+  space: {
+    height: 15,
+  },
   inputLabel: {
-    paddingHorizontal: 10,
     marginTop: 5,
   },
   inputLabelSwitch: {
-    paddingHorizontal: 10,
-    marginTop: 17,
+    marginTop: 14,
   },
 });
 
@@ -136,6 +138,7 @@ export const TaskDetailScreen = ({navigation, route}) => {
         />
       </View>
       <Button title={submitButtonTitle} onPress={handleSubmit(onSubmit)} />
+      <View style={styles.space} />
       {task && (
         <Button
           title={'Delete Task'}

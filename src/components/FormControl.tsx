@@ -11,11 +11,10 @@ const styles = StyleSheet.create({
   textInput: {
     paddingHorizontal: 10,
     height: 40,
-    margin: 10,
+    marginVertical: 10,
     borderWidth: 1,
   },
   switchInput: {
-    paddingHorizontal: 10,
     margin: 10,
   },
 });
